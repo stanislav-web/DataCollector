@@ -1,0 +1,32 @@
+{
+  "name": "stanislav-web/data-collector",
+  "description": "DataCollector",
+  "type": "project",
+  "license": "GPL-v3.0",
+  "version": "0.0.1",
+  "keywords": [
+    "Data Collector",
+    "Crystal Clear Soft"
+  ],
+  "support": {
+    "issues": "https://github.com/stanislav-web/DataCollector/issues"
+  },
+  "authors": [
+    {
+      "name": "Stanislav WEB",
+      "email": "stanisov@gmail.com",
+      "homepage": "https://github.com/stanislav-web",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "homepage": "https://github.com/stanislav-web/DataCollector",
+  "require": {
+    "php": ">=5.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "DataCollector\\": "src/DataCollector"
+    }
+  }
+}
