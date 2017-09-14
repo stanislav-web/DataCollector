@@ -6,7 +6,7 @@ try {
 
     /** @var \DataCollector\Modules\Data\Module $dataModule */
     $dataModule = $di->get('DataModule');
-    var_dump($dataModule->getService());
+    $dataModule->getService()->parse($_GET);
 
 } catch (Exception $e) {
     echo $e;

@@ -34,7 +34,7 @@ class Module implements ModuleInterface {
      * @throws \ReflectionException
      * @throws \DataCollector\Modules\Data\Db\Exception\DbException
      * @throws DataException
-     * @return DataService
+     * @return DataServiceInterface
      */
     public function getService() {
 
