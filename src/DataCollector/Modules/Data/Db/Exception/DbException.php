@@ -1,16 +1,16 @@
 <?php
-namespace DataCollector\Exceptions;
+namespace DataCollector\Modules\Data\Db\Exception;
 
 /**
- * Class DependencyContainerException
- * @package DataCollector\Exceptions
+ * Class DbException
+ * @package DataCollector\Modules\Data\Db\Exception
  */
-class DependencyContainerException extends \RuntimeException
-{
+class DbException extends \Exception {
+
     const CODE = 500;
 
     /**
-     * DependencyContainerException constructor.
+     * DbException constructor.
      *
      * @param string          $message
      * @param int             $code
@@ -26,5 +26,4 @@ class DependencyContainerException extends \RuntimeException
     public function __toString() {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
-
 }

@@ -1,16 +1,16 @@
 <?php
-namespace DataCollector\Exceptions;
+namespace DataCollector\Modules\Data;
 
 /**
- * Class DependencyContainerException
- * @package DataCollector\Exceptions
+ * Class DataException
+ * @package DataCollector\Modules\Data
  */
-class DependencyContainerException extends \RuntimeException
-{
-    const CODE = 500;
+class DataException extends \Exception {
+
+    const CODE = 400;
 
     /**
-     * DependencyContainerException constructor.
+     * DataException constructor.
      *
      * @param string          $message
      * @param int             $code

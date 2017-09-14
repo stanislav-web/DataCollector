@@ -1,18 +1,12 @@
 <?php
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/bootstrap.php';
 
-define('DS', DIRECTORY_SEPARATOR);
-
-$dic = new \DataCollector\DependencyContainer(
-    new \DataCollector\Registry()
-);
 
 try {
 
-    // @TODO Register using modules
-
-
-    // @TODO Dispatch router
+    /** @var \DataCollector\Modules\Data\Module $dataModule */
+    $dataModule = $di->get('DataModule');
+    var_dump($dataModule->getService());
 
 } catch (Exception $e) {
     echo $e;
