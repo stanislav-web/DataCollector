@@ -24,6 +24,12 @@
   "require": {
     "php": ">=5.3"
   },
+  "scripts": {
+    "post-install-cmd": [
+      "npm install bower",
+      "bower install"
+    ]
+  },
   "autoload": {
     "psr-4": {
       "DataCollector\\": "src/DataCollector"
