@@ -19,6 +19,66 @@ class DataMapper extends AbstractDataMapper {
     const TABLE = 'data';
 
     /**
+     * Find rows
+     *
+     * @throws DataManagerException
+     * @return int
+     * @throws \DataCollector\Modules\Data\Db\Exception\DbException
+     */
+    public function countRows( ) {
+
+        $query = 'SELECT COUNT(`id`) as `count`
+                    FROM ' .self::TABLE;
+
+        $result = $this->db->fetch($query, []);
+
+        if (null === $result) {
+            throw new DataManagerException('Calculate rows does not executed');
+        }
+        return (int)$result['count'];
+    }
+
+
+    /**
+     * Find rows
+     *
+     * @param string $order
+     * @param string $condition
+     * @param int    $limit
+     * @param int    $offset
+     *
+     * @return array
+     * @throws \DataCollector\Modules\Data\Db\Exception\DbException
+     * @throws DataManagerException
+     */
+    public function findRows(   $order = 'id',
+                                $condition = 'ASC',
+                                $limit = 10,
+                                $offset = 0
+                            ) {
+
+        $query = 'SELECT `id`, `code`, `type`, `status`, `application`,
+                         `message`, `date_create`, `date_update`
+                    FROM ' .self::TABLE.'
+                    ORDER BY :order :condition LIMIT :offset, :limit';
+
+        $escapedQuery = strtr($query, [
+                ':order' => $this->db->escape($order),
+                ':condition' => $this->db->escape($condition),
+                ':limit' => $this->db->escape($limit),
+                ':offset' => $this->db->escape($offset),
+            ]
+        );
+
+        $result = $this->db->fetchAll($escapedQuery);
+
+        if (null === $result) {
+            throw new DataManagerException('Rows are not available');
+        }
+        return $this->mapRows($result);
+    }
+
+    /**
      * Add entity
      *
      * @param AbstractEntity|Data $entity

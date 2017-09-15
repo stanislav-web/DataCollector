@@ -5,7 +5,7 @@
     "stanislav-web <stanisov@gmail.com>"
   ],
   "description": "Crystal Clear Soft : Test task",
-  "main": "show.php",
+  "main": "index.html",
   "license": "GPL-v3",
   "ignore": [
     "**/.*",

@@ -42,7 +42,7 @@ abstract class AbstractDataMapper {
      *
      * @return array
      */
-    protected function mapRows(array $rows): array {
+    protected function mapRows(array $rows) {
 
         $result = [];
 

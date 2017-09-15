@@ -1,16 +1,17 @@
 <?php
-require_once __DIR__.'/bootstrap.php';
 
+define('DS', DIRECTORY_SEPARATOR);
+
+require_once __DIR__.DS.'vendor'.DS.'autoload.php';
 
 try {
 
-    /** @var \DataCollector\Modules\Data\Module $dataModule */
-    $dataModule = $di->get('DataModule');
+    $dataModule = new \DataCollector\Modules\Data\Module();
     $dataService = $dataModule->getService();
-    $result = $dataService->save($_GET['data']);
+    $result = $dataService->saveData($_GET['data']);
 
     echo $result;
-    
+
 } catch (Exception $e) {
     echo $e;
 }

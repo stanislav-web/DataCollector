@@ -8,3 +8,4 @@ Development
 - [ADD] Entity Validator @estimated 25 min (codefreez.)
 - [COMPLETE] 50%. Save structures has been completed @estimated 1h
 - [ADD] And configured jQuery table plugin as prototype @estimated 1h (codefreez.)
+- [ADD] Fetching data procedure complete. Prepare to edit Frontend @estimated 1h

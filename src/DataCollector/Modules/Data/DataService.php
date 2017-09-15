@@ -2,7 +2,6 @@
 namespace DataCollector\Modules\Data;
 
 use DataCollector\Modules\Data\DataManager\DataMapper;
-use DataCollector\Modules\Data\Entities\AbstractEntity;
 use DataCollector\Modules\Data\Entities\Data;
 use DataCollector\Modules\Data\Validators\DataEntityValidator;
 use DataCollector\Modules\Data\Validators\JsonValidator;
@@ -12,6 +11,13 @@ use DataCollector\Modules\Data\Validators\JsonValidator;
  * @package DataCollector\Modules\Data
  */
 class DataService implements DataServiceInterface {
+
+    /**
+     * Total rows per one page
+     *
+     * @const ROWS_PER_PAGE
+     */
+    const ROWS_PER_PAGE = 10;
 
     /**
      * @var DataMapper $dataMapper
@@ -28,6 +34,45 @@ class DataService implements DataServiceInterface {
     }
 
     /**
+     * Fetch data via DataManager
+     *
+     * @param array $param
+     * @throws DataException
+     *
+     * @return array
+     */
+    public function fetchData(array $param) {
+
+        try {
+
+            $result = [];
+
+            $currentPage = isset($param['page']) ? (int)$param['page'] : 1;
+            $countTotal = $this->dataMapper->countRows();
+            $countPages = (int)(($countTotal - 1) / self::ROWS_PER_PAGE) + 1;
+
+            $result['meta'] = [
+                'currentPage' =>  $currentPage,
+                'countTotal' =>   $countTotal,
+                'countPages' =>   $countPages,
+                'rowsPerPage' =>  self::ROWS_PER_PAGE,
+
+            ];
+            $offset = ($currentPage * self::ROWS_PER_PAGE - self::ROWS_PER_PAGE);
+            $result['rows'] =  $this->dataMapper->findRows($param['order'],
+                $param['condition'],
+                self::ROWS_PER_PAGE,
+                $offset
+            );
+
+            return $result;
+
+        } catch (\Exception $e) {
+            throw new DataException($e->getMessage());
+        }
+    }
+
+    /**
      * Save data via data manager
      *
      * @param string $inputString
@@ -35,7 +80,7 @@ class DataService implements DataServiceInterface {
      *
      * @return int
      */
-    public function save($inputString) {
+    public function saveData($inputString) {
 
         try {
 
@@ -58,7 +103,4 @@ class DataService implements DataServiceInterface {
             throw new DataException($e->getMessage());
         }
     }
-
-
-
 }

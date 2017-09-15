@@ -7,7 +7,7 @@ use DataCollector\Modules\Data\DataManager\DataMapper;
  * Class Module
  * @package DataCollector\Modules\Data
  */
-class Module implements ModuleInterface {
+final class Module implements ModuleInterface {
 
     /**
      * Default storage driver

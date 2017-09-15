@@ -83,4 +83,15 @@ abstract class AbstractDatabase {
      */
     abstract public function delete($query, array $params);
 
+    /**
+     * Escape string
+     *
+     * @param int $param
+     *
+     * @return string
+     */
+    public function escape($param) {
+        return addslashes(trim($param));
+    }
+
 }

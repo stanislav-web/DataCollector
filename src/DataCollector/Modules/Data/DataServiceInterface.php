@@ -8,6 +8,16 @@ namespace DataCollector\Modules\Data;
 interface DataServiceInterface {
 
     /**
+     * Fetch data via DataManager
+     *
+     * @param array $param
+     * @throws DataException
+     *
+     * @return array
+     */
+    public function fetchData(array $param);
+
+    /**
      * Save data via data manager
      *
      * @param string $inputString
@@ -15,5 +25,5 @@ interface DataServiceInterface {
      *
      * @return int
      */
-    public function save($inputString);
+    public function saveData($inputString);
 }

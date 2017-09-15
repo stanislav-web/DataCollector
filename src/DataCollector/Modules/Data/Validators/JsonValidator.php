@@ -2,7 +2,6 @@
 namespace DataCollector\Modules\Data\Validators;
 
 use DataCollector\Modules\Data\Aware\ValidatorInterface;
-use DataCollector\Modules\Data\Entities\AbstractEntity;
 
 /**
  * Class JsonValidator
@@ -42,14 +41,15 @@ class JsonValidator implements ValidatorInterface {
      * Is object has valid state?
      *
      * @return bool
+     * @throws \RuntimeException
      */
     public function isValid() {
 
-        $data = json_decode((string) $this->param, true);
+        $data = json_decode($this->param, true);
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw new \RuntimeException('Unable to parse response body into JSON');
         }
 
-        return $data === null ? false : true;
+        return $data !== null;
     }
 }
