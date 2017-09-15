@@ -8,6 +8,15 @@ namespace DataCollector\Modules\Data\Entities;
 abstract class AbstractEntity {
 
     /**
+     * AbstractEntity constructor.
+     *
+     * @param array $param
+     */
+    public function __construct(array $param) {
+        $this->setFromArray($param);
+    }
+
+    /**
      * @param string $property
      *
      * @throws \InvalidArgumentException
@@ -32,7 +41,7 @@ abstract class AbstractEntity {
      * @throws \InvalidArgumentException
      */
     public function __set($property, $value) {
-        throw new \InvalidArgumentException($property.' property does not support for this Entity');
+        throw new \InvalidArgumentException($property.' property does not support');
     }
 
     /**
@@ -42,7 +51,7 @@ abstract class AbstractEntity {
      *
      * @return AbstractEntity
      */
-    public function setFromArray(array $data) {
+    public function setFromArray($data) {
 
         foreach ($data as $property => $value) {
             $this->$property = (true === is_numeric($value)) ? (int)$value : trim($value);

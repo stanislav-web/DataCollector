@@ -25,7 +25,7 @@ class Module implements ModuleInterface {
      * @return \stdClass
      */
     public function getConfig() {
-        return (object)include __DIR__ . '/module.config.php';
+        return (object)include __DIR__ . DS.'config'.DS.'module.config.php';
     }
 
     /**

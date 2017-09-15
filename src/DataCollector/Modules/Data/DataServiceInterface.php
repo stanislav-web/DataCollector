@@ -8,7 +8,12 @@ namespace DataCollector\Modules\Data;
 interface DataServiceInterface {
 
     /**
-     * Parse data from external request
+     * Save data via data manager
+     *
+     * @param string $inputString
+     * @throws DataException
+     *
+     * @return int
      */
-    public function parse(array $params);
+    public function save($inputString);
 }

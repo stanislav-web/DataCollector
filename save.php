@@ -6,8 +6,11 @@ try {
 
     /** @var \DataCollector\Modules\Data\Module $dataModule */
     $dataModule = $di->get('DataModule');
-    $dataModule->getService()->parse($_GET);
+    $dataService = $dataModule->getService();
+    $result = $dataService->save($_GET['data']);
 
+    echo $result;
+    
 } catch (Exception $e) {
     echo $e;
 }

@@ -6,3 +6,4 @@ Development
 - [ADD] Basic architecture @estimated 30 min (taken from my dev-s)
 - [ADD] Module prototype structure @estimated 30 min (also taked and modified from my dev-s)
 - [ADD] Entity Validator @estimated 25 min (codefreez.)
+- [COMPLETE] 50%. Save structures has been completed @estimated 1h

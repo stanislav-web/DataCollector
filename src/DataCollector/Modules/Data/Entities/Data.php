@@ -29,11 +29,12 @@ class Data extends AbstractEntity {
     public $type;
 
     /**
-     * Message
+     * String
      *
-     * @var string $message
+     * @var string $status
      */
-    public $message;
+    public $status;
+
 
     /**
      * Application
@@ -41,4 +42,26 @@ class Data extends AbstractEntity {
      * @var string $application
      */
     public $application;
+
+    /**
+     * Message
+     *
+     * @var string $message
+     */
+    public $message;
+
+    /**
+     * Date create
+     *
+     * @var string $date_create
+     */
+    public $date_create;
+
+
+    /**
+     * Date update
+     *
+     * @var string $date_update
+     */
+    public $date_update;
 }
