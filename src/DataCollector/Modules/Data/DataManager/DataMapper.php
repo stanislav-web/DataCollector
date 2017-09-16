@@ -65,8 +65,8 @@ class DataMapper extends AbstractDataMapper {
         $escapedQuery = strtr($query, [
                 ':order' => $this->db->escape($order),
                 ':condition' => $this->db->escape($condition),
-                ':limit' => $this->db->escape($limit),
-                ':offset' => $this->db->escape($offset),
+                ':limit' => abs($this->db->escape($limit)),
+                ':offset' => abs($this->db->escape($offset)),
             ]
         );
 

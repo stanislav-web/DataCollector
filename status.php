@@ -12,8 +12,8 @@ try {
         $dataModule = new \DataCollector\Modules\Data\Module();
         $dataService = $dataModule->getService();
 
-        if ('fetch' === $_GET['action']) {
-            $result = $dataService->fetchData($_REQUEST);
+        if ('update' === $_GET['action']) {
+            $result = $dataService->updateData($_REQUEST);
             echo json_encode($result);
         } else {
             throw new \Exception('Undefined action error');

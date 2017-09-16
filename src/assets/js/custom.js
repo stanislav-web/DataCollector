@@ -1,11 +1,21 @@
 jQuery(function () {
-    var entryPoint = 'show.php';
-    var table = jQuery('#table').DataTable({
+    var showPoint = 'show.php';
+    var statusPoint = 'status.php';
+    var table = jQuery('#table').on('init.dt', function (target, d, f) {
+        var t = target.currentTarget;
+        var rows = jQuery(t).find('tbody > tr');
+        rows.each(function (value, row) {
+            var className = jQuery(row).find('option:selected').val()
+            jQuery(row).addClass(className);
+        });
+    }).DataTable({
         pagingType: 'full_numbers',
         processing: true,
         serverSide: true,
         searching: false,
-        ajax: entryPoint + '?action=fetch',
+        ajax: showPoint + '?action=fetch',
+        iDisplayLength: 20,
+        lengthMenu: [[10, 20, 50, 100], [10, 20, 50, 100]],
         columns: [
             {"data": "id"},
             {"data": "code"},
@@ -15,20 +25,24 @@ jQuery(function () {
             {"data": "date_create"},
             {"data": "date_update"},
             {
-                "data": "status", editable: true, className: 'sel_type', render: function (data, type, row) {
-                var sel = '<select>';
-                sel += '<option value="received"';
-                if (data === 'received')
-                    sel += 'selected';
-                sel += '>received</option><option value="read"';
-                if (data === 'read')
-                    sel += 'selected';
-                sel += '>read</option><option value="fixed"';
-                if (data === 'fixed')
-                    sel += 'selected';
-                sel += '>fixed</option></select>';
-                return sel;
-            }
+                data: "status",
+                editable: true,
+                className: 'sel_type',
+                render: function (data) {
+
+                    var sel = '<select>';
+                    sel += '<option value="received"';
+                    if (data === 'received')
+                        sel += 'selected';
+                    sel += '>received</option><option value="read"';
+                    if (data === 'read')
+                        sel += 'selected';
+                    sel += '>read</option><option value="fixed"';
+                    if (data === 'fixed')
+                        sel += 'selected';
+                    sel += '>fixed</option></select>';
+                    return sel;
+                }
             }
         ]
     });
@@ -39,9 +53,11 @@ jQuery(function () {
     jQuery('#table tbody').on('change', 'select', function () {
         var row = table.row(jQuery(this).parents('tr'));
         var status = jQuery(this).find('option:selected').val();
+        var statuses = ['fixed', 'received', 'read'];
         var then = this;
 
-        jQuery.post(entryPoint + '?action=update', {
+
+        jQuery.post(statusPoint + '?action=update', {
             id: row.data().id,
             status: status
         }, function (response) {
@@ -50,14 +66,11 @@ jQuery(function () {
             var tablerow = jQuery(then).parents('tr');
 
             if (isTrueSet) {
-                tablerow.addClass('selected');
-            } else {
-                tablerow.addClass('orangered');
+                for (var i = 0; i < statuses.length; i++) {
+                    tablerow.removeClass(statuses[i]);
+                }
+                tablerow.addClass(status);
             }
-            setTimeout(function () {
-                tablerow.removeClass('selected');
-                tablerow.removeClass('orangered');
-            }, 1000);
         });
-    });
+    })
 });

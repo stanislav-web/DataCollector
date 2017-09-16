@@ -81,7 +81,20 @@ table.dataTable tbody tr {
 table.dataTable tbody tr.selected {
     background-color: #b0bed9;
 }
+table.dataTable tbody tr.success {
+    background-color: greenyellow;
+}
 table.dataTable tbody tr.failed {
+    background-color: orangered;
+}
+
+table.dataTable tbody tr.fixed {
+    background-color: chartreuse;
+}
+table.dataTable tbody tr.read {
+    background-color: bisque;
+}
+table.dataTable tbody tr.received {
     background-color: orangered;
 }
 table.dataTable tbody th,
@@ -515,46 +528,6 @@ table.dataTable td {
     content: "";
     clear: both;
     height: 0;
-}
-
-.ex_highlight #table tbody tr.even:hover, #table tbody tr.even td.highlighted {
-    background-color: #ECFFB3;
-}
-
-.ex_highlight #table tbody tr.odd:hover, #table tbody tr.odd td.highlighted {
-    background-color: #E6FF99;
-}
-
-.ex_highlight_row #table tr.even:hover {
-    background-color: #ECFFB3;
-}
-
-.ex_highlight_row #table tr.even:hover td.sorting_1 {
-    background-color: #DDFF75;
-}
-
-.ex_highlight_row #table tr.even:hover td.sorting_2 {
-    background-color: #E7FF9E;
-}
-
-.ex_highlight_row #table tr.even:hover td.sorting_3 {
-    background-color: #E2FF89;
-}
-
-.ex_highlight_row #table tr.odd:hover {
-    background-color: #E6FF99;
-}
-
-.ex_highlight_row #table tr.odd:hover td.sorting_1 {
-    background-color: #D6FF5C;
-}
-
-.ex_highlight_row #table tr.odd:hover td.sorting_2 {
-    background-color: #E0FF84;
-}
-
-.ex_highlight_row #table tr.odd:hover td.sorting_3 {
-    background-color: #DBFF70;
 }
 
 @media screen and (max-width: 767px) {
