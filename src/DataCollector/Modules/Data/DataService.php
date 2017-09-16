@@ -13,13 +13,6 @@ use DataCollector\Modules\Data\Validators\JsonValidator;
 class DataService implements DataServiceInterface {
 
     /**
-     * Total rows per one page
-     *
-     * @const ROWS_PER_PAGE
-     */
-    const ROWS_PER_PAGE = 10;
-
-    /**
      * @var DataMapper $dataMapper
      */
     private $dataMapper;
@@ -36,36 +29,32 @@ class DataService implements DataServiceInterface {
     /**
      * Fetch data via DataManager
      *
-     * @param array $param
+     * @param array $request
      * @throws DataException
      *
-     * @return array
+     * @return DataTableTransferObject
      */
-    public function fetchData(array $param) {
+    public function fetchData(array $request) {
 
         try {
 
-            $result = [];
-
-            $currentPage = isset($param['page']) ? (int)$param['page'] : 1;
             $countTotal = $this->dataMapper->countRows();
-            $countPages = (int)(($countTotal - 1) / self::ROWS_PER_PAGE) + 1;
+            $order = current($request['order']);
+            $draw = isset ( $request['draw'] ) ? (int)$request['draw']: 0;
+            $order['column'] = $request['columns'][$order['column']]['data'];
 
-            $result['meta'] = [
-                'currentPage' =>  $currentPage,
-                'countTotal' =>   $countTotal,
-                'countPages' =>   $countPages,
-                'rowsPerPage' =>  self::ROWS_PER_PAGE,
-
-            ];
-            $offset = ($currentPage * self::ROWS_PER_PAGE - self::ROWS_PER_PAGE);
-            $result['rows'] =  $this->dataMapper->findRows($param['order'],
-                $param['condition'],
-                self::ROWS_PER_PAGE,
-                $offset
+            $dataObjects = $this->dataMapper->findRows($order['column'],
+                $order['dir'],
+                $request['length'],
+                $request['start']
             );
 
-            return $result;
+            $dataTransfer = new DataTableTransferObject();
+            $dataTransfer->draw = $draw;
+            $dataTransfer->recordsTotal = $countTotal;
+            $dataTransfer->recordsFiltered = $countTotal;
+            $dataTransfer->data = $dataObjects;
+            return $dataTransfer;
 
         } catch (\Exception $e) {
             throw new DataException($e->getMessage());
@@ -101,6 +90,24 @@ class DataService implements DataServiceInterface {
 
         } catch (\Exception $e) {
             throw new DataException($e->getMessage());
+        }
+    }
+
+
+    /**
+     * Update data via data manager
+     *
+     * @param array $request
+     * @throws DataException
+     *
+     * @return bool
+     */
+    public function updateData(array $request) {
+
+        try {
+            return $this->dataMapper->updateStatusRow($request['id'], $request['status']);
+        } catch (\Exception $e) {
+            throw new DataException('Undefined error');
         }
     }
 }

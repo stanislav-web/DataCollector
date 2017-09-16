@@ -1,32 +1,63 @@
-jQuery(function() {
-    jQuery('#table').Tabledit({
-        url: 'show.php',
-        columns: {
-            identifier: [0, 'id'],
-            editable: [[1, 'username'], [2, 'email'], [3, 'avatar', '{"1": "Black Widow", "2": "Captain America", "3": "Iron Man"}']]
-        },
-        onDraw: function() {
-            console.log('onDraw()');
-        },
-        onSuccess: function(data, textStatus, jqXHR) {
-            console.log('onSuccess(data, textStatus, jqXHR)');
-            console.log(data);
-            console.log(textStatus);
-            console.log(jqXHR);
-        },
-        onFail: function(jqXHR, textStatus, errorThrown) {
-            console.log('onFail(jqXHR, textStatus, errorThrown)');
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        },
-        onAlways: function() {
-            console.log('onAlways()');
-        },
-        onAjax: function(action, serialize) {
-            console.log('onAjax(action, serialize)');
-            console.log(action);
-            console.log(serialize);
-        }
+jQuery(function () {
+    var entryPoint = 'show.php';
+    var table = jQuery('#table').DataTable({
+        pagingType: 'full_numbers',
+        processing: true,
+        serverSide: true,
+        searching: false,
+        ajax: entryPoint + '?action=fetch',
+        columns: [
+            {"data": "id"},
+            {"data": "code"},
+            {"data": "type"},
+            {"data": "application"},
+            {"data": "message", orderable: false},
+            {"data": "date_create"},
+            {"data": "date_update"},
+            {
+                "data": "status", editable: true, className: 'sel_type', render: function (data, type, row) {
+                var sel = '<select>';
+                sel += '<option value="received"';
+                if (data === 'received')
+                    sel += 'selected';
+                sel += '>received</option><option value="read"';
+                if (data === 'read')
+                    sel += 'selected';
+                sel += '>read</option><option value="fixed"';
+                if (data === 'fixed')
+                    sel += 'selected';
+                sel += '>fixed</option></select>';
+                return sel;
+            }
+            }
+        ]
+    });
+
+    /**
+     * Update status row
+     */
+    jQuery('#table tbody').on('change', 'select', function () {
+        var row = table.row(jQuery(this).parents('tr'));
+        var status = jQuery(this).find('option:selected').val();
+        var then = this;
+
+        jQuery.post(entryPoint + '?action=update', {
+            id: row.data().id,
+            status: status
+        }, function (response) {
+
+            var isTrueSet = (response === 'true');
+            var tablerow = jQuery(then).parents('tr');
+
+            if (isTrueSet) {
+                tablerow.addClass('selected');
+            } else {
+                tablerow.addClass('orangered');
+            }
+            setTimeout(function () {
+                tablerow.removeClass('selected');
+                tablerow.removeClass('orangered');
+            }, 1000);
+        });
     });
 });

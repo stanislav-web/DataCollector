@@ -110,6 +110,27 @@ class DataMapper extends AbstractDataMapper {
     }
 
     /**
+     * Update row
+     *
+     * @param int $id
+     * @param string $status
+     *
+     * @throws DataManagerException
+     * @return bool
+     */
+    public function updateStatusRow($id, $status) {
+        try {
+            $query = 'UPDATE ' .self::TABLE. '
+                        SET `status` = :status
+                         WHERE `id` = :id';
+
+            return $this->db->update($query, ['id' => $id, 'status' => $status]);
+        } catch (DbException $e) {
+            throw new DataManagerException('Status #'.$id.' doesn not updated');
+        }
+    }
+
+    /**
      * Mapping data from row to object
      *
      * @param array $row

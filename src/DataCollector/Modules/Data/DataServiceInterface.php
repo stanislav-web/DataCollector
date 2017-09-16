@@ -10,12 +10,12 @@ interface DataServiceInterface {
     /**
      * Fetch data via DataManager
      *
-     * @param array $param
+     * @param array $request
      * @throws DataException
      *
      * @return array
      */
-    public function fetchData(array $param);
+    public function fetchData(array $request);
 
     /**
      * Save data via data manager
@@ -26,4 +26,14 @@ interface DataServiceInterface {
      * @return int
      */
     public function saveData($inputString);
+
+    /**
+     * Update data via data manager
+     *
+     * @param array $request
+     * @throws DataException
+     *
+     * @return bool
+     */
+    public function updateData(array $request);
 }
